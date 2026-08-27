@@ -1,0 +1,20 @@
+const enum HttpCode {
+    OK = 200,
+    NO_CONTENT = 204,
+    USER_SESSION_EXIST = 209,
+
+    BAD_REQUEST = 400,
+    UNAUTHORIZED = 401,
+    FORBIDDEN = 403,
+    NOT_FOUND = 404,
+    CONFLICT = 409,
+
+    INTERNAL_SERVER_ERROR = 500,
+
+    USER_NOT_FOUND = 995,
+    USER_INACTIVE = 996,
+    NO_ROLE_ASSIGNED = 997,
+    INVALID_TOKEN = 998,
+    USER_SESSION_DOES_NOT_EXIST = 999
+}
+export default HttpCode;
