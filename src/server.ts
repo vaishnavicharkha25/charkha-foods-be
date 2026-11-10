@@ -6,7 +6,7 @@ import logger from './utils/winstonLogger';
 import moment from 'moment-timezone';
 
 const NAMESPACE = '[SERVER CONNECTION]:';
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.PORT) || 15637;
 const HOST = '0.0.0.0';
 
 const server = http.createServer(app);
