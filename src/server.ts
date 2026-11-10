@@ -5,7 +5,8 @@ import logger from './utils/winstonLogger';
 import moment from 'moment-timezone';  // Moment for timezone
 
 const NAMESPACE = '[SERVER CONNECTION]:';
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT) || 3000;
+const HOST = '0.0.0.0';
 
 const server = http.createServer(app);  // Creating an HTTP server using the express app
 
@@ -19,8 +20,8 @@ if (require.main === module) {
             logger.info(`${NAMESPACE} Database connected successfully`);
 
             // Start the server after the database authentication
-            server.listen(PORT, () => {
-                logger.info(`${NAMESPACE} Server started on port ${PORT}`);
+            server.listen(PORT, HOST, () => {
+                logger.info(`${NAMESPACE} Server started on http://${HOST}:${PORT}`);
             });
         } catch (error: unknown) {
             logger.error(

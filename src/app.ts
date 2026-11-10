@@ -15,7 +15,8 @@ const NAMESPACE = '[APPLICATION]:';
 // CORS configuration
 const allowedOrigins = [
     'http://localhost:3000',
-    'http://localhost:8080'
+    'http://localhost:8080',
+    ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : [])
 ];
 
 const corsOptions: CorsOptions = {
