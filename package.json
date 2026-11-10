@@ -10,6 +10,7 @@
     "tsc-watch": "tsc --w",
     "tsc": "tsc",
     "build": "tsc",
+    "postinstall": "npm run build",
     "dev": "cross-env NODE_ENV=development nodemon dist/server",
     "start": "node dist/server",
     "start:dev": "cross-env NODE_ENV=development node dist/server",
