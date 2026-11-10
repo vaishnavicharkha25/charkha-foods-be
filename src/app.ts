@@ -1,8 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors, { CorsOptions } from 'cors';
-import router from './routes';  
-import logger from './utils/winstonLogger';  
+import router from './routes';
+import logger from './utils/winstonLogger';
 import { ErrorRequestHandler } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
@@ -15,7 +15,7 @@ const NAMESPACE = '[APPLICATION]:';
 // CORS configuration
 const allowedOrigins = [
     'http://localhost:3000',
-    'http://localhost:5173'
+    'http://localhost:8080'
 ];
 
 const corsOptions: CorsOptions = {
