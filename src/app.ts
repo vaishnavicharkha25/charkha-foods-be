@@ -16,7 +16,8 @@ const NAMESPACE = '[APPLICATION]:';
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:8080',
-    'https://charkha-foods.netlify.app/',
+    'https://charkha-foods.netlify.app',
+    'https://charkha-foods.in',
     ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : [])
 ];
 
