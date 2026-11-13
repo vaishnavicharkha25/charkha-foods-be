@@ -18,6 +18,7 @@ export class OrderController {
         paymentMethod,
         items,
         status,
+        applyGst,
       } = req.body;
 
       if (!Array.isArray(items) || items.length === 0) {
@@ -100,9 +101,10 @@ export class OrderController {
           }
         }
       }
-      // 2. Process coupon discount & 5% GST for all orders (2.5% CGST + 2.5% SGST)
+      // 2. Process coupon discount & GST (admin can toggle applyGst ON or OFF; default is true)
+      const isGstEnabled = applyGst !== false && applyGst !== 'false';
       const taxableAmount = Math.max(0, subtotal - discount);
-      const gstAmount = Math.round(taxableAmount * 0.05 * 100) / 100;
+      const gstAmount = isGstEnabled ? Math.round(taxableAmount * 0.05 * 100) / 100 : 0;
       const total = Math.round((taxableAmount + gstAmount) * 100) / 100;
 
       // 3. Generate unique order code (e.g. CHK-1042)
