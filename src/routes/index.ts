@@ -10,6 +10,7 @@ import customerRoutes from './customerRoutes';
 import qrRoutes from './qrRoutes';
 import staffRoutes from './staffRoutes';
 import roleRoutes from './roleRoutes';
+import settingRoutes from './settingRoutes';
 
 const router = Router();
 const NAMESPACE = '[SERVER]:';
@@ -43,6 +44,7 @@ router.use('/', customerRoutes);
 router.use('/', qrRoutes);
 router.use('/', staffRoutes);
 router.use('/', roleRoutes);
+router.use('/', settingRoutes);
 
 /* Route to handle exception URLs */
 router.use((req, res) => {

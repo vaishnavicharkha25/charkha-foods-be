@@ -16,6 +16,7 @@ import LoyaltyTransaction from './LoyaltyTransaction';
 import Role from './Role';
 import Permission from './Permission';
 import RolePermission from './RolePermission';
+import AppSetting from './AppSetting';
 
 export const models = [
   User,
@@ -36,6 +37,7 @@ export const models = [
   Role,
   Permission,
   RolePermission,
+  AppSetting,
 ];
 
 export {
@@ -57,4 +59,5 @@ export {
   Role,
   Permission,
   RolePermission,
+  AppSetting,
 };

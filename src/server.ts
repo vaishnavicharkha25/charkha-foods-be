@@ -18,6 +18,26 @@ moment.tz.setDefault('Asia/Calcutta');
         await sequelize.authenticate();
         logger.info(`${NAMESPACE} Database connected successfully`);
 
+        // Ensure app_settings table exists and default flags are initialized
+        const { AppSetting } = await import('./database/models');
+        await AppSetting.sync();
+        await AppSetting.findOrCreate({
+            where: { key: 'gst_enabled' },
+            defaults: {
+                key: 'gst_enabled',
+                value: 'true',
+                description: 'Enable or disable 5% GST across orders and billing (true / false)',
+            },
+        });
+        await AppSetting.findOrCreate({
+            where: { key: 'gst_rate' },
+            defaults: {
+                key: 'gst_rate',
+                value: '5',
+                description: 'Default GST percentage rate',
+            },
+        });
+
         server.listen(PORT, HOST, () => {
             logger.info(
                 `${NAMESPACE} Server started on http://${HOST}:${PORT}`

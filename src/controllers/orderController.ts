@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Order, OrderItem, OrderItemAddOn, Product, AddOn, Coupon, QrSource, CustomerProfile, LoyaltyTransaction } from '../database/models';
+import { Order, OrderItem, OrderItemAddOn, Product, AddOn, Coupon, QrSource, CustomerProfile, LoyaltyTransaction, AppSetting } from '../database/models';
 import { Op } from 'sequelize';
 
 export class OrderController {
@@ -101,10 +101,19 @@ export class OrderController {
           }
         }
       }
-      // 2. Process coupon discount & GST (admin can toggle applyGst ON or OFF; default is true)
-      const isGstEnabled = applyGst !== false && applyGst !== 'false';
+      // 2. Process coupon discount & GST (Reads flag directly from DB app_settings table or request)
+      let isGstEnabled: boolean;
+      if (applyGst !== undefined && applyGst !== null) {
+        isGstEnabled = applyGst !== false && applyGst !== 'false' && applyGst !== 0 && applyGst !== '0';
+      } else {
+        isGstEnabled = await AppSetting.isGstEnabled();
+      }
+      const rateStr = await AppSetting.getSetting('gst_rate', '5');
+      const gstPercentage = Number(rateStr) || 5;
+      const gstRate = isGstEnabled ? (gstPercentage / 100) : 0;
+
       const taxableAmount = Math.max(0, subtotal - discount);
-      const gstAmount = isGstEnabled ? Math.round(taxableAmount * 0.05 * 100) / 100 : 0;
+      const gstAmount = isGstEnabled ? Math.round(taxableAmount * gstRate * 100) / 100 : 0;
       const total = Math.round((taxableAmount + gstAmount) * 100) / 100;
 
       // 3. Generate unique order code (e.g. CHK-1042)
