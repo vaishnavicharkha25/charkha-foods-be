@@ -114,7 +114,8 @@ export class OrderController {
 
       const taxableAmount = Math.max(0, subtotal - discount);
       const gstAmount = isGstEnabled ? Math.round(taxableAmount * gstRate * 100) / 100 : 0;
-      const total = Math.round((taxableAmount + gstAmount) * 100) / 100;
+      const rawTotal = Math.round((taxableAmount + gstAmount) * 100) / 100;
+      const total = Math.round(rawTotal);
 
       // 3. Generate unique order code (e.g. CHK-1042)
       const orderCount = await Order.count();
