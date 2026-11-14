@@ -43,6 +43,23 @@ moment.tz.setDefault('Asia/Calcutta');
                 `${NAMESPACE} Server started on http://${HOST}:${PORT}`
             );
         });
+
+        // Also listen on port 3000 if PORT is different, so clients targeting port 3000 also work
+        if (PORT !== 3000) {
+            const fallbackServer = http.createServer(app);
+            fallbackServer.on('error', (err: NodeJS.ErrnoException) => {
+                if (err.code === 'EADDRINUSE') {
+                    logger.warn(`${NAMESPACE} Port 3000 is already in use, skipping port 3000 listener.`);
+                } else {
+                    logger.error(`${NAMESPACE} Port 3000 listener error: ${err.message}`);
+                }
+            });
+            fallbackServer.listen(3000, HOST, () => {
+                logger.info(
+                    `${NAMESPACE} Server also listening on http://${HOST}:3000`
+                );
+            });
+        }
     } catch (error: unknown) {
         logger.error(
             `${NAMESPACE} Unable to start the server: ${error instanceof Error ? error.message : error
